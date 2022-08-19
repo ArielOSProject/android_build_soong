@@ -596,7 +596,7 @@ func (a *AndroidApp) dexBuildActions(ctx android.ModuleContext) android.Path {
 	a.dexpreopter.libraryPaths = a.usesLibrary.usesLibraryPaths(ctx)
 	a.dexpreopter.manifestFile = a.mergedManifestFile
 
-	if ctx.ModuleName() != "framework-res" && ctx.ModuleName() != "org.lineageos.platform-res" {
+	if ctx.ModuleName() != "framework-res" && ctx.ModuleName() != "org.lineageos.platform-res" && ctx.ModuleName() != "com.arielos.platform-res" {
 		a.Module.compile(ctx, a.aaptSrcJar)
 	}
 
@@ -744,6 +744,9 @@ func (a *AndroidApp) generateAndroidBuildActions(ctx android.ModuleContext) {
 		a.installDir = android.PathForModuleInstall(ctx, "framework")
 	} else if ctx.ModuleName() == "org.lineageos.platform-res" {
 		// org.lineageos.platform-res.apk needs to be in system/framework
+		a.installDir = android.PathForModuleInstall(ctx, "framework")
+	} else if ctx.ModuleName() == "com.arielos.platform-res" {
+		// com.arielos.platform-res.apk needs to be in system/framework
 		a.installDir = android.PathForModuleInstall(ctx, "framework")
 	} else if a.Privileged() {
 		a.installDir = android.PathForModuleInstall(ctx, "priv-app", a.installApkName)

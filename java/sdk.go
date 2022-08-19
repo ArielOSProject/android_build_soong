@@ -373,7 +373,7 @@ func decodeSdkDep(ctx android.EarlyModuleContext, sdkContext sdkContext) sdkDep 
 		}
 	}
 
-	toModule := func(modules []string, res string, lineageRes string, aidl android.Path) sdkDep {
+	toModule := func(modules []string, res string, lineageRes string, arielRes string, aidl android.Path) sdkDep {
 		return sdkDep{
 			useModule:          true,
 			bootclasspath:      append(modules, config.DefaultLambdaStubsLibrary),
@@ -381,6 +381,7 @@ func decodeSdkDep(ctx android.EarlyModuleContext, sdkContext sdkContext) sdkDep 
 			java9Classpath:     modules,
 			frameworkResModule: res,
 			lineageResModule:   lineageRes,
+			arielResModule:		arielRes,
 			aidl:               android.OptionalPathForPath(aidl),
 		}
 	}
@@ -406,6 +407,7 @@ func decodeSdkDep(ctx android.EarlyModuleContext, sdkContext sdkContext) sdkDep 
 			useDefaultLibs:     true,
 			frameworkResModule: "framework-res",
 			lineageResModule:   "org.lineageos.platform-res",
+			arielResModule:   	"com.arielos.platform-res",
 		}
 	case sdkNone:
 		systemModules := sdkContext.systemModules()
@@ -429,22 +431,23 @@ func decodeSdkDep(ctx android.EarlyModuleContext, sdkContext sdkContext) sdkDep 
 			useDefaultLibs:     true,
 			frameworkResModule: "framework-res",
 			lineageResModule:   "org.lineageos.platform-res",
+			arielResModule:     "com.arielos.platform-res",
 			noFrameworksLibs:   true,
 		}
 	case sdkPublic:
-		return toModule([]string{"android_stubs_current"}, "framework-res", "org.lineageos.platform-res", sdkFrameworkAidlPath(ctx))
+		return toModule([]string{"android_stubs_current"}, "framework-res", "org.lineageos.platform-res", "com.arielos.platform-res", sdkFrameworkAidlPath(ctx))
 	case sdkSystem:
-		return toModule([]string{"android_system_stubs_current"}, "framework-res", "org.lineageos.platform-res", sdkFrameworkAidlPath(ctx))
+		return toModule([]string{"android_system_stubs_current"}, "framework-res", "org.lineageos.platform-res", "com.arielos.platform-res", sdkFrameworkAidlPath(ctx))
 	case sdkTest:
-		return toModule([]string{"android_test_stubs_current"}, "framework-res", "org.lineageos.platform-res", sdkFrameworkAidlPath(ctx))
+		return toModule([]string{"android_test_stubs_current"}, "framework-res", "org.lineageos.platform-res", "com.arielos.platform-res", sdkFrameworkAidlPath(ctx))
 	case sdkCore:
-		return toModule([]string{"core.current.stubs"}, "", "", nil)
+		return toModule([]string{"core.current.stubs"}, "", "", "", nil)
 	case sdkModule:
 		// TODO(146757305): provide .apk and .aidl that have more APIs for modules
-		return toModule([]string{"android_module_lib_stubs_current"}, "framework-res", "org.lineageos.platform-res", nonUpdatableFrameworkAidlPath(ctx))
+		return toModule([]string{"android_module_lib_stubs_current"}, "framework-res", "org.lineageos.platform-res", "com.arielos.platform-res", nonUpdatableFrameworkAidlPath(ctx))
 	case sdkSystemServer:
 		// TODO(146757305): provide .apk and .aidl that have more APIs for modules
-		return toModule([]string{"android_system_server_stubs_current"}, "framework-res", "org.lineageos.platform-res", sdkFrameworkAidlPath(ctx))
+		return toModule([]string{"android_system_server_stubs_current"}, "framework-res", "org.lineageos.platform-res", "com.arielos.platform-res", sdkFrameworkAidlPath(ctx))
 	default:
 		panic(fmt.Errorf("invalid sdk %q", sdkVersion.raw))
 	}

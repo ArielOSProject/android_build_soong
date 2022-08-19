@@ -180,6 +180,10 @@ func GatherRequiredDepsForTest() string {
 			system_modules: "core-platform-api-stubs-system-modules",
 			installable: true,
 		}
+		android_app {
+			name: "com.arielos.platform-res",
+			sdk_version: "core_platform",
+		}
 	`
 
 	systemModules := []string{
