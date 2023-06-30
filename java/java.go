@@ -362,6 +362,7 @@ var (
 	systemModulesTag        = dependencyTag{name: "system modules", runtimeLinked: true}
 	frameworkResTag         = dependencyTag{name: "framework-res"}
 	lineageResTag           = dependencyTag{name: "org.lineageos.platform-res"}
+	arielResTag 			= dependencyTag{name: "com.arielos.platform-res"}
 	kotlinStdlibTag         = dependencyTag{name: "kotlin-stdlib", runtimeLinked: true}
 	kotlinAnnotationsTag    = dependencyTag{name: "kotlin-annotations", runtimeLinked: true}
 	kotlinPluginTag         = dependencyTag{name: "kotlin-plugin", toolchain: true}
@@ -402,6 +403,7 @@ type sdkDep struct {
 
 	frameworkResModule string
 	lineageResModule   string
+	arielResModule     string
 
 	jars android.Paths
 	aidl android.OptionalPath
@@ -443,6 +445,9 @@ func sdkDeps(ctx android.BottomUpMutatorContext, sdkContext android.SdkContext, 
 	}
 
 	if ctx.ModuleName() == "org.lineageos.platform-res" {
+		ctx.AddVariationDependencies(nil, frameworkResTag, "framework-res")
+	}
+	if ctx.ModuleName() == "com.arielos.platform-res" {
 		ctx.AddVariationDependencies(nil, frameworkResTag, "framework-res")
 	}
 }

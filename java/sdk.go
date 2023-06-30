@@ -153,6 +153,7 @@ func decodeSdkDep(ctx android.EarlyModuleContext, sdkContext android.SdkContext)
 			java9Classpath:     []string{module},
 			frameworkResModule: "framework-res",
 			lineageResModule:   "org.lineageos.platform-res",
+			arielResModule:	    "com.arielos.platform-res",
 			aidl:               android.OptionalPathForPath(aidl),
 		}
 	}
@@ -166,6 +167,7 @@ func decodeSdkDep(ctx android.EarlyModuleContext, sdkContext android.SdkContext)
 			classpath:          config.FrameworkLibraries,
 			frameworkResModule: "framework-res",
 			lineageResModule:   "org.lineageos.platform-res",
+			arielResModule:     "com.arielos.platform-res",
 		}
 	case android.SdkNone:
 		systemModules := sdkContext.SystemModules()

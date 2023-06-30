@@ -256,6 +256,10 @@ org\.chromium\.arc\..*
 lineageos\.platform
 org\.lineageos\.platform\.internal
 
+# ArielOS adds
+arielos\.platform
+com\.arielos\.platform\.internal
+
 # NV adds
 com\.nvidia
 com\.nvidia\..*
